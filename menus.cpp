@@ -2,6 +2,7 @@
 #include <iostream>
 #include <filesystem>
 #include <vector>
+#include <algorithm>
 
 std::string menuDataSetSelection() {
     std::cout << "Delivery Truck Pallet Packing Optimization\n\n";
