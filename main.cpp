@@ -1,20 +1,14 @@
+#include <iostream>
 #include <vector>
-#include "menus.h"
+#include <chrono>
+#include "inputHandler.h"
 #include "dataParsing.h"
 #include "solver.h"
 
-int main() {
-
-    std::string TruckAndPalletsFile = "../data_sets/" + menuDataSetSelection() + ".csv";
-    std::string PalletsFile = TruckAndPalletsFile.substr(0,13) + "Pallets" + TruckAndPalletsFile.substr(TruckAndPalletsFile.size()-7);
-    int approachSelection = menuApproachSelection();
-
-    Truck truck;
-    std::vector<Pallet> pallets;
-
-    parseData(TruckAndPalletsFile, PalletsFile, truck, pallets);
-
+void printSolution(Truck& truck, std::vector<Pallet>& pallets, int approachSelection) {
     Solver solver(truck.capacity, truck.pallets, pallets);
+
+    auto start = std::chrono::high_resolution_clock::now();
 
     if (approachSelection == 1) {
         solver.bruteForce();
@@ -29,6 +23,31 @@ int main() {
         solver.integerLinear();
     }
 
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::milli> elapsed = end - start;
+
+    std::cout << "\n-----------------Solution-----------------\n\n";
+    solver.printMaxValue();
+    solver.printSolution();
+    std::cout << "Execution time: " << elapsed.count() << " ms\n";
+    std::cout << "\n------------------------------------------\n\n";
+}
+
+int main() {
+    while (true) {
+        std::string truckAndPalletsFile;
+        std::string palletsFile;
+        int approachSelection;
+
+        Truck truck;
+        std::vector<Pallet> pallets;
+
+
+        if (!getInput(truckAndPalletsFile, palletsFile, approachSelection)) break;
+        parseData(truckAndPalletsFile, palletsFile, truck, pallets);
+        printSolution(truck, pallets, approachSelection);
+    }
 
     return 0;
 }

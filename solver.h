@@ -13,12 +13,17 @@ private:
     double capacity;
     int numPallets;
     std::vector<Pallet> pallets;
+
+    double maxProfit = 0.0;
+    std::vector<Pallet> solution = {};
 public:
-    Solver(double capacity, int numPallets, std::vector<Pallet> pallets);
+    Solver(double capacity, int numPallets, std::vector<Pallet>& pallets);
     void bruteForce();
     void dynamicProgramming();
     void greedy();
     void integerLinear();
+    void printMaxValue();
+    void printSolution();
 };
 
 

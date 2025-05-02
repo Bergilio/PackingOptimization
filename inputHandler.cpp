@@ -1,7 +1,16 @@
-#include "menus.h"
+#include "inputHandler.h"
 #include <iostream>
 #include <filesystem>
 #include <vector>
+
+bool getInput(std::string &truckAndPalletsFile, std::string &palletsFile, int &approachSelection) {
+    truckAndPalletsFile = "../data_sets/" + menuDataSetSelection() + ".csv";
+    if (truckAndPalletsFile == "../data_sets/.csv") return false;
+    palletsFile = truckAndPalletsFile.substr(0,13) + "Pallets" + truckAndPalletsFile.substr(truckAndPalletsFile.size()-7);
+    approachSelection = menuApproachSelection();
+    return true;
+}
+
 
 std::string menuDataSetSelection() {
     std::cout << "Delivery Truck Pallet Packing Optimization\n\n";
@@ -26,11 +35,14 @@ std::string menuDataSetSelection() {
         std::cout << "[" << i << "] " << name << '\n';
         i++;
     }
+    std::cout << "\nPress 0 to quit\n";
 
     int choice;
     std::cout << "\nChoice: ";
     std::cin >> choice;
     std::cout << '\n';
+
+    if (choice == 0) return "";
 
     return files[choice - 1];
 }
