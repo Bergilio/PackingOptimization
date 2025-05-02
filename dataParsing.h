@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-struct TruckInfo {
+struct Truck {
     double capacity;
     int pallets;
 };
@@ -15,8 +15,8 @@ struct Pallet {
     double profit;
 };
 
-void parseTruckInfo(const std::string& TruckAndPalletsFile, TruckInfo& truckInfo);
+void parseTruckInfo(const std::string& TruckAndPalletsFile, Truck& truck);
 void parsePallets(const std::string& PalletsFile, std::vector<Pallet>& pallets);
-void parseData(const std::string& TruckAndPalletsFile, const std::string& PalletsFile, TruckInfo& truckInfo, std::vector<Pallet>& pallets);
+void parseData(const std::string& TruckAndPalletsFile, const std::string& PalletsFile, Truck& truck, std::vector<Pallet>& pallets);
 
 #endif

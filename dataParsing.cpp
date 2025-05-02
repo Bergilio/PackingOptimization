@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-void parseTruckInfo(const std::string& TruckAndPalletsFile, TruckInfo& truckInfo) {
+void parseTruckInfo(const std::string& TruckAndPalletsFile, Truck& truck) {
     std::ifstream inputFile(TruckAndPalletsFile);
 
     if (!inputFile.is_open()) {
@@ -15,8 +15,8 @@ void parseTruckInfo(const std::string& TruckAndPalletsFile, TruckInfo& truckInfo
     std::getline(inputFile, line);
     std::getline(inputFile, line);
 
-    truckInfo.capacity = std::stod(line.substr(0, line.find(',')));
-    truckInfo.pallets = std::stoi(line.substr(line.find(',') + 1));
+    truck.capacity = std::stod(line.substr(0, line.find(',')));
+    truck.pallets = std::stoi(line.substr(line.find(',') + 1));
 
 }
 
@@ -42,7 +42,7 @@ void parsePallets(const std::string& PalletsFile, std::vector<Pallet>& pallets) 
 
 
 
-void parseData(const std::string& TruckAndPalletsFile, const std::string& PalletsFile, TruckInfo& truckInfo, std::vector<Pallet>& pallets) {
-    parseTruckInfo(TruckAndPalletsFile, truckInfo);
+void parseData(const std::string& TruckAndPalletsFile, const std::string& PalletsFile, Truck& truck, std::vector<Pallet>& pallets) {
+    parseTruckInfo(TruckAndPalletsFile, truck);
     parsePallets(PalletsFile, pallets);
 }
