@@ -34,8 +34,8 @@ void parsePallets(const std::string& PalletsFile, std::vector<Pallet>& pallets) 
         Pallet pallet;
         std::istringstream iss(line);
         pallet.id = std::stoi(line.substr(0, line.find(',')));
-        pallet.weight = std::stod(line.substr(line.find(',') + 1, line.find(',')));
-        pallet.profit = std::stod(line.substr(line.find(',') + 1));
+        pallet.weight = std::stod(line.substr(line.find(',') + 1));
+        pallet.profit = std::stod(line.substr(line.find_last_of(',') + 1));
         pallets.push_back(pallet);
     }
 }
