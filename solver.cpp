@@ -17,13 +17,15 @@ void Solver::greedy() {
         return (a.profit/a.weight) > (b.profit/b.weight);
     });
 
-    double maxProfit = 0;
+    double totalProfit = 0;
     double totalWeight = 0;
+    int palletsUsed = 0;
 
     for (Pallet &p: sortedPallets) {
-        if (totalWeight + p.weight <= capacity) {
+        if (palletsUsed < numPallets && totalWeight + p.weight <= capacity) {
             totalWeight += p.weight;
-            maxProfit += p.profit;
+            totalProfit += p.profit;
+            palletsUsed++;
         }
     }
 }
