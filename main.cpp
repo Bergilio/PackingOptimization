@@ -5,8 +5,8 @@
 #include "dataParsing.h"
 #include "solver.h"
 
-void printSolution(Truck& truck, std::vector<Pallet>& pallets, int approachSelection) {
-    Solver solver(truck.capacity, truck.pallets, pallets);
+void printSolution(Truck& truck, std::vector<Pallet>& pallets, int approachSelection, std::string &truckAndPalletsFile, std::string &palletsFile) {
+    Solver solver(truck.capacity, truck.pallets, pallets, truckAndPalletsFile, palletsFile);
 
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -46,7 +46,7 @@ int main() {
 
         if (!getInput(truckAndPalletsFile, palletsFile, approachSelection)) break;
         parseData(truckAndPalletsFile, palletsFile, truck, pallets);
-        printSolution(truck, pallets, approachSelection);
+        printSolution(truck, pallets, approachSelection, truckAndPalletsFile, palletsFile);
     }
 
     return 0;

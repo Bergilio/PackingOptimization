@@ -15,7 +15,7 @@ void parseTruckInfo(const std::string& TruckAndPalletsFile, Truck& truck) {
     std::getline(inputFile, line);
     std::getline(inputFile, line);
 
-    truck.capacity = std::stod(line.substr(0, line.find(',')));
+    truck.capacity = std::stoi(line.substr(0, line.find(',')));
     truck.pallets = std::stoi(line.substr(line.find(',') + 1));
 
 }
@@ -29,16 +29,30 @@ void parsePallets(const std::string& PalletsFile, std::vector<Pallet>& pallets) 
     }
 
     std::string line;
-    std::getline(inputFile, line);
+    std::getline(inputFile, line); // skip header line
+
     while (std::getline(inputFile, line)) {
-        Pallet pallet;
         std::istringstream iss(line);
-        pallet.id = std::stoi(line.substr(0, line.find(',')));
-        pallet.weight = std::stod(line.substr(line.find(',') + 1, line.find(',')));
-        pallet.profit = std::stod(line.substr(line.find(',') + 1));
+        std::string token;
+
+        Pallet pallet;
+
+        // ID
+        std::getline(iss, token, ',');
+        pallet.id = std::stoi(token);
+
+        // Weight
+        std::getline(iss, token, ',');
+        pallet.weight = std::stoi(token);
+
+        // Profit
+        std::getline(iss, token);
+        pallet.profit = std::stod(token);
+
         pallets.push_back(pallet);
     }
 }
+
 
 
 

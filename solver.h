@@ -10,14 +10,24 @@
 
 class Solver {
 private:
-    double capacity;
+    int capacity;
     int numPallets;
     std::vector<Pallet> pallets;
 
-    double maxProfit = 0.0;
+    double maxProfit;
     std::vector<Pallet> solution = {};
+
+    std::string truckFile;
+    std::string palletsFile;
+
+    void sortByRatioDesc();
+    void sortByValueDesc();
+    double greedyRatio(std::vector<Pallet>& solution);
+    double greedyBiggest(std::vector<Pallet>& solution);
+    std::string execPythonILP();
+
 public:
-    Solver(double capacity, int numPallets, std::vector<Pallet>& pallets);
+    Solver(int capacity, int numPallets, std::vector<Pallet>& pallets, std::string &truckFile, std::string &palletsFile);
     void bruteForce();
     void dynamicProgramming();
     void greedy();

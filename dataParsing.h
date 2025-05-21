@@ -5,13 +5,13 @@
 #include <vector>
 
 struct Truck {
-    double capacity;
+    int capacity;
     int pallets;
 };
 
 struct Pallet {
     int id;
-    double weight;
+    int weight;
     double profit;
 };
 
