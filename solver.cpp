@@ -83,6 +83,12 @@ std::string Solver::execPythonILP() {
     return result;
 }
 
+bool Solver::isTimeoutExceeded(const std::chrono::steady_clock::time_point& startTime, double timeoutSeconds) {
+    auto now = std::chrono::steady_clock::now();
+    double elapsed = std::chrono::duration<double>(now - startTime).count();
+    return elapsed > timeoutSeconds;
+}
+
 
 //Public Methods (solution callers)
 
@@ -95,7 +101,14 @@ void Solver::bruteForce() {
     // There are 2^numPallets subsets
     unsigned long long totalSubsets = 1ULL << numPallets;
 
+    auto startTime = std::chrono::steady_clock::now();
+
     for (int subset = 0; subset < totalSubsets; ++subset) {
+        if (subset % 1000 == 0 && isTimeoutExceeded(startTime, 120)) {
+            std::cout << "Timeout reached, stopping brute force early." << std::endl;
+            break;
+        }
+
         double currentWeight = 0;
         double currentProfit = 0;
         std::vector<Pallet> currentSolution;
@@ -124,6 +137,7 @@ void Solver::bruteForce() {
     }
 }
 
+// a vector was used in this approach
 void Solver::dynamicProgramming() {
     // dp[i][w] = max profit using first i pallets with max weight w
     std::vector<std::vector<double>> dp(numPallets + 1, std::vector<double>(capacity + 1, 0));
@@ -152,8 +166,6 @@ void Solver::dynamicProgramming() {
             w -= pallets[i-1].weight;
         }
     }
-
-    std::reverse(solution.begin(), solution.end());
 }
 
 
@@ -185,11 +197,6 @@ void Solver::greedy() {
             solution = greedyBiggestPallets;
         }
     }
-
-    // Sort solution by ascending ID:
-    std::sort(solution.begin(), solution.end(), [](const Pallet& a, const Pallet& b) {
-        return a.id < b.id;
-    });
 }
 
 void Solver::integerLinear() {
@@ -253,9 +260,13 @@ void Solver::printMaxValue() {
 }
 
 void Solver::printSolution() {
+    std::sort(solution.begin(), solution.end(), [](const Pallet& a, const Pallet& b) {
+        return a.id < b.id;
+    });
+
     std::cout << "Pallets id: ";
     for (int i = 0; i < solution.size(); i++) {
-        std::cout << '<'<< solution[i].id << ">";
+        std::cout << '<' << solution[i].id << ">";
     }
     std::cout << '\n';
 }

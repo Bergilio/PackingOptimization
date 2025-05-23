@@ -38,7 +38,8 @@ def main():
 
     x = [LpVariable(f"x_{i}", cat=LpBinary) for i in range(num_items)]
 
-    model += lpSum(x[i] * profits[i] for i in range(num_items)), "TotalProfit"
+    epsilon = 1e-6  # small penalty to prefer fewer pallets among equal profits
+    model += lpSum(x[i] * profits[i] for i in range(num_items)) - epsilon * lpSum(x[i] for i in range(num_items)), "TotalProfitWithPalletPenalty"
     model += lpSum(x[i] * weights[i] for i in range(num_items)) <= capacity, "WeightLimit"
 
     model.solve()

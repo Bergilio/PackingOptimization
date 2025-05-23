@@ -1,0 +1,5 @@
+Dataset: ../data_sets/TruckAndPallets_05.csv
+Approach: Brute Force
+Maximum profit: 15
+Pallets id: <1><3><7><15>
+Execution time: 91621.5 ms

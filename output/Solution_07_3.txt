@@ -1,0 +1,5 @@
+Dataset: ../data_sets/TruckAndPallets_07.csv
+Approach: Greedy
+Maximum profit: 987
+Pallets id: <13><14>
+Execution time: 0.010381 ms

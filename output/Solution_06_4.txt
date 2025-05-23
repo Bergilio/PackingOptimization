@@ -1,0 +1,5 @@
+Dataset: ../data_sets/TruckAndPallets_06.csv
+Approach: ILP
+Maximum profit: 2047
+Pallets id: <4><10><11><12><14><17><22><27><58><193><196><219><415><1008><1712><2300>
+Execution time: 330.42 ms

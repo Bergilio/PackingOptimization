@@ -1,0 +1,5 @@
+Dataset: ../data_sets/TruckAndPallets_09.csv
+Approach: Dynamic Programming
+Maximum profit: 945
+Pallets id: <2><3><4><5><6><7><8><9><10><11><12><13><14><15><16>
+Execution time: 0.031997 ms

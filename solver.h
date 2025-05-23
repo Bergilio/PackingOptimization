@@ -7,6 +7,7 @@
 
 #include "dataParsing.h"
 #include <vector>
+#include <chrono>
 
 class Solver {
 private:
@@ -25,6 +26,7 @@ private:
     double greedyRatio(std::vector<Pallet>& solution);
     double greedyBiggest(std::vector<Pallet>& solution);
     std::string execPythonILP();
+    bool isTimeoutExceeded(const std::chrono::steady_clock::time_point& startTime, double timeoutSeconds);
 
 public:
     Solver(int capacity, int numPallets, std::vector<Pallet>& pallets, std::string &truckFile, std::string &palletsFile);
